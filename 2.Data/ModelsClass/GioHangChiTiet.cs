@@ -10,15 +10,11 @@ namespace _2.Data.ModelsClass
     {
         public Guid Id { get; set; }
         public Guid? IdGioHang { get; set; }
-        public Guid? IdMonAn { get; set; }
-        public Guid? IdCombo { get; set; }
-        public Guid? IdDoUong { get; set; }
+        public Guid? IdSanPham { get; set; }
         public int SoLuong { get; set; }
         public decimal GiaBan { get; set; }
 
         public GioHang gioHang { get; set; }
-        public MonAn monAn { get; set; }
-        public Combo combo { get; set; }
-        public DoUong doUong { get; set; }
+        public SanPham sanpham { get; set; }
     }
 }

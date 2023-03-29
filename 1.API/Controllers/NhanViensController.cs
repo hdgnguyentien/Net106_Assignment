@@ -44,12 +44,15 @@ namespace _1.API.Controllers
             NhanVien cv = new NhanVien()
             {
                 Id = Guid.NewGuid(),
+                IdChucVu = ccv.IdChucVu,
                 Ten = ccv.Ten,
                 Email = ccv.Email,
                 MatKhau = ccv.MatKhau,
                 GioiTinh = ccv.GioiTinh,
                 Sdt = ccv.Sdt,
                 DiaChi = ccv.DiaChi,
+                TrangThai = ccv.TrangThai,
+                AnhNhanVien = ccv.AnhNhanVien,
             };
             try
             {
@@ -64,7 +67,7 @@ namespace _1.API.Controllers
         }
 
         [HttpPost]
-        [Route("Update/id")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> UpdateNhanVien(Guid id, [FromBody] UpdateNhanVien ucv)
         {
             var result = await _repo.GetByIdAsync(id);
@@ -80,6 +83,9 @@ namespace _1.API.Controllers
                 result.MatKhau = ucv.MatKhau;
                 result.GioiTinh = ucv.GioiTinh;
                 result.Sdt = ucv.Sdt;
+                result.TrangThai = ucv.TrangThai;
+                result.IdChucVu = ucv.IdChucVu;
+                result.AnhNhanVien = ucv.AnhNhanVien;
                 try
                 {
                     await _repo.UpdateOneAsyn(result);

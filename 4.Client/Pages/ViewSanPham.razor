@@ -1,0 +1,40 @@
+﻿@page "/sanphamview"
+@using _2.Data.ModelsClass;
+@using _4.Client.IServices;
+@inject IAllServices allServices
+<h3>Sản Phẩm</h3>
+@if (sanPhams == null)
+{
+    <div class="spinner-border"></div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ten</th>
+                <th>Gia ban</th>
+                <th>Sl</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in sanPhams)
+            {
+                <tr>
+                    <td>@item.Ten</td>
+                    <td>@item.GiaBan</td>
+                    <td>@item.GiaBan</td>
+                    <td>@item.SoLuong</td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+}
+@code{
+        
+    private List<SanPham> sanPhams;
+    protected override async Task OnInitializedAsync()
+    {
+        sanPhams = await allServices.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
+    }
+}

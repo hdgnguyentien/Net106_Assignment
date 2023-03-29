@@ -13,6 +13,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped(typeof(IAllRepositories<>), typeof(AllRepositories<>));
 builder.Services.AddDbContext<DoAnNhanhDbContext>(c => c.UseSqlServer("Server=HDGNGUYENTIEN\\SQLEXPRESS;Database=Net106Database;Trusted_Connection=True;"));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder
+    .SetIsOriginAllowed((host) => true)
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials());
+
+});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +35,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();

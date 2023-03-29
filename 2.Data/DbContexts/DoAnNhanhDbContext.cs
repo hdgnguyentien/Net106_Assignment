@@ -24,22 +24,20 @@ namespace _2.Data.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ComboConfiguration());
-            modelBuilder.ApplyConfiguration(new DoUongConfiguration());
             modelBuilder.ApplyConfiguration(new GioHangChiTietConfiguration());
             modelBuilder.ApplyConfiguration(new GioHangConfiguration());
             modelBuilder.ApplyConfiguration(new HoaDonChiTietConfiguration());
             modelBuilder.ApplyConfiguration(new HoaDonConfiguration());
             modelBuilder.ApplyConfiguration(new KhachHangConfiguration());
             modelBuilder.ApplyConfiguration(new LoaiConfiguration());
-            modelBuilder.ApplyConfiguration(new MonAnConfiguration());
+            modelBuilder.ApplyConfiguration(new SanPhamConfiguration());
             modelBuilder.ApplyConfiguration(new NhanVienConfiguration());
+            modelBuilder.ApplyConfiguration(new ChucVuConfiguration());
 
             modelBuilder.Seed();
         }
         //dbset
-        public DbSet<Combo> Combos { get; set; }
-        public DbSet<DoUong> DoUongs { get; set; }
+        public DbSet<SanPham> SanPhams { get; set; }
         public DbSet<GioHang> GioHangs { get; set; }
         public DbSet<GioHangChiTiet> GioHangChiTiets { get; set; }
         public DbSet<HoaDon> HoaDons { get; set; }
@@ -47,6 +45,6 @@ namespace _2.Data.DbContexts
         public DbSet<KhachHang> KhachHangs { get; set; }
         public DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<Loai> Loais { get; set; }
-        public DbSet<MonAn> MonAns { get; set; }
+        public DbSet<ChucVu> ChucVus { get; set; }
     }
 }

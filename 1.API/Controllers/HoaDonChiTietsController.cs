@@ -45,9 +45,7 @@ namespace _1.API.Controllers
             {
                 Id = Guid.NewGuid(),
                 IdHoaDon = ccv.IdHoaDon,
-                IdMonAn = ccv.IdMonAn,
-                IdComBo = ccv.IdComBo,
-                IdDoUong = ccv.IdDoUong,
+                IdSanPham = ccv.IdSanPham,
                 SoLuong = ccv.SoLuong,
                 GiaBan = ccv.GiaBan,
             };
@@ -64,7 +62,7 @@ namespace _1.API.Controllers
         }
 
         [HttpPost]
-        [Route("Update/id")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> UpdateHoaDonChiTiet(Guid id, [FromBody] UpdateHoaDonChiTiet ucv)
         {
             var result = await _repo.GetByIdAsync(id);
@@ -75,9 +73,7 @@ namespace _1.API.Controllers
             else
             {
                 result.IdHoaDon = ucv.IdHoaDon;
-                result.IdMonAn = ucv.IdMonAn;
-                result.IdComBo = ucv.IdComBo;
-                result.IdDoUong = ucv.IdDoUong;
+                result.IdSanPham = ucv.IdSanPham;
                 result.SoLuong = ucv.SoLuong;
                 result.GiaBan = ucv.GiaBan;
                 try

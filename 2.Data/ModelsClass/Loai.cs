@@ -10,11 +10,11 @@ namespace _2.Data.ModelsClass
     {
         public Loai() 
         {
-            monAns = new HashSet<MonAn>();
+            sanPhams = new HashSet<SanPham>();
         }
         public Guid Id { get; set; }
         public string Ten { get; set; }
         public bool TrangThai { get; set; }
-        public virtual ICollection<MonAn> monAns { get; set; }
+        public virtual ICollection<SanPham> sanPhams { get; set; }
     }
 }

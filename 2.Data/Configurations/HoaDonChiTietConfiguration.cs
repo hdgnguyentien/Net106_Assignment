@@ -19,14 +19,10 @@ namespace _2.Data.Configurations
             builder.Property(x=>x.SoLuong).IsRequired();
             builder.Property(x=>x.GiaBan).IsRequired();
             builder.Property(x=>x.IdHoaDon);
-            builder.Property(x=>x.IdMonAn);
-            builder.Property(x=>x.IdComBo);
-            builder.Property(x=>x.IdDoUong);
+            builder.Property(x=>x.IdSanPham);
 
             builder.HasOne(x => x.hoaDon).WithMany(x => x.hoaDonChiTiets).HasForeignKey(x => x.IdHoaDon);
-            builder.HasOne(x => x.monAn).WithMany(x => x.hoaDonChiTiets).HasForeignKey(x => x.IdMonAn);
-            builder.HasOne(x => x.combo).WithMany(x => x.hoaDonChiTiets).HasForeignKey(x => x.IdComBo);
-            builder.HasOne(x => x.doUong).WithMany(x => x.hoaDonChiTiets).HasForeignKey(x => x.IdDoUong);
+            builder.HasOne(x => x.sanpham).WithMany(x => x.hoaDonChiTiets).HasForeignKey(x => x.IdSanPham);
         }
     }
 }

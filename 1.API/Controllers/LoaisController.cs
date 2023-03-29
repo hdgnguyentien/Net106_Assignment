@@ -60,7 +60,7 @@ namespace _1.API.Controllers
         }
 
         [HttpPost]
-        [Route("Update/id")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> UpdateLoai(Guid id, [FromBody] UpdateLoai ucv)
         {
             var result = await _repo.GetByIdAsync(id);

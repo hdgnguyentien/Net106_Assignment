@@ -1,4 +1,5 @@
-using _3.Admin.Data;
+using _3.Admin.IServices;
+using _3.Admin.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -7,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
+builder.Services.AddTransient<IAllServices, AllServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

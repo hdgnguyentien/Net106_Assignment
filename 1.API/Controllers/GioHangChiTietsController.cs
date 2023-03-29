@@ -1,5 +1,4 @@
-﻿using _1.API.ViewModels.DoUong;
-using _1.API.ViewModels.GioHangChiTiet;
+﻿using _1.API.ViewModels.GioHangChiTiet;
 using _2.Data.IRepositories;
 using _2.Data.ModelsClass;
 using Microsoft.AspNetCore.Mvc;
@@ -45,9 +44,7 @@ namespace _1.API.Controllers
             {
                 Id = Guid.NewGuid(),
                 IdGioHang = ccv.IdGioHang,
-                IdMonAn = ccv.IdMonAn,
-                IdCombo = ccv.IdCombo,
-                IdDoUong = ccv.IdDoUong,
+                IdSanPham = ccv.IdSanPham,
                 SoLuong = ccv.SoLuong,
                 GiaBan = ccv.GiaBan,
             };
@@ -64,7 +61,7 @@ namespace _1.API.Controllers
         }
 
         [HttpPost]
-        [Route("Update/id")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> UpdateGioHangChiTiet(Guid id, [FromBody] UpdateGioHangChiTiet ucv)
         {
             var result = await _repo.GetByIdAsync(id);
@@ -75,9 +72,7 @@ namespace _1.API.Controllers
             else
             {
                 result.IdGioHang = ucv.IdGioHang;
-                result.IdMonAn = ucv.IdMonAn;
-                result.IdCombo = ucv.IdCombo;
-                result.IdDoUong = ucv.IdDoUong;
+                result.IdSanPham = ucv.IdSanPham;
                 result.GiaBan = ucv.GiaBan;
                 result.SoLuong = ucv.SoLuong;
                 try

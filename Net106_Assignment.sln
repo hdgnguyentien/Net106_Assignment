@@ -3,22 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1.API", "1.API\1.API.csproj", "{28F2EF7E-1B15-4F76-8506-08C3943C5149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1.API", "1.API\1.API.csproj", "{28F2EF7E-1B15-4F76-8506-08C3943C5149}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7B8294EC-2247-4480-85AF-9F37C2F4A3C7} = {7B8294EC-2247-4480-85AF-9F37C2F4A3C7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3.Admin", "3.Admin\3.Admin.csproj", "{94FA87B9-0B17-4ECF-BE0E-DAECBEACB08A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3.Admin", "3.Admin\3.Admin.csproj", "{94FA87B9-0B17-4ECF-BE0E-DAECBEACB08A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{28F2EF7E-1B15-4F76-8506-08C3943C5149} = {28F2EF7E-1B15-4F76-8506-08C3943C5149}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4.Client", "4.Client\4.Client.csproj", "{0FC45758-E807-47FD-9241-567F66F500F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4.Client", "4.Client\4.Client.csproj", "{0FC45758-E807-47FD-9241-567F66F500F6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{28F2EF7E-1B15-4F76-8506-08C3943C5149} = {28F2EF7E-1B15-4F76-8506-08C3943C5149}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2.Data", "2.Data\2.Data.csproj", "{7B8294EC-2247-4480-85AF-9F37C2F4A3C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2.Data", "2.Data\2.Data.csproj", "{7B8294EC-2247-4480-85AF-9F37C2F4A3C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -22,26 +22,11 @@ namespace _2.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("_2.Data.ModelsClass.Combo", b =>
+            modelBuilder.Entity("_2.Data.ModelsClass.ChucVu", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AnhCombo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("GiaBan")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("IdDoUong")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdMonAn")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
 
                     b.Property<string>("Ten")
                         .IsRequired()
@@ -49,98 +34,18 @@ namespace _2.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdDoUong");
-
-                    b.HasIndex("IdMonAn");
-
-                    b.ToTable("Combo", (string)null);
+                    b.ToTable("ChucVu", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f433cbcc-5300-45ce-bd6c-c41dc87b3f30"),
-                            GiaBan = 100000m,
-                            IdDoUong = new Guid("a6640bfb-ee82-45f9-8111-0fffb4e06a6a"),
-                            IdMonAn = new Guid("008e2497-081b-4e33-8781-5004edfdf479"),
-                            SoLuong = 10,
-                            Ten = "Combo Hạnh Phúc"
+                            Id = new Guid("6fc0f38f-b421-4fef-8361-8136825aa354"),
+                            Ten = "Nhân Viên"
                         },
                         new
                         {
-                            Id = new Guid("0b061962-0e18-469b-a59e-7435bae36ded"),
-                            GiaBan = 200000m,
-                            IdDoUong = new Guid("3cb233cb-a774-4c65-993e-f36af6ba178e"),
-                            IdMonAn = new Guid("7e9fe1cf-11cf-4ff1-9bff-b5dea3803b82"),
-                            SoLuong = 10,
-                            Ten = "Combo Không Hạnh Phúc"
-                        },
-                        new
-                        {
-                            Id = new Guid("7cb5f225-8db2-4d48-9f73-68a42b78c1d2"),
-                            GiaBan = 300000m,
-                            IdDoUong = new Guid("68ba1ddf-46b0-4d88-987b-e1d0852ef1c7"),
-                            IdMonAn = new Guid("e7dbf7d6-95d0-4294-b801-f63bc610a746"),
-                            SoLuong = 10,
-                            Ten = "Combo Rất Hạnh Phúc"
-                        });
-                });
-
-            modelBuilder.Entity("_2.Data.ModelsClass.DoUong", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AnhDoUong")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("GiaBan")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("GiaNhap")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ten")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DoUong", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a6640bfb-ee82-45f9-8111-0fffb4e06a6a"),
-                            GiaBan = 15000m,
-                            GiaNhap = 12000m,
-                            SoLuong = 10,
-                            Ten = "Coca",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("3cb233cb-a774-4c65-993e-f36af6ba178e"),
-                            GiaBan = 12000m,
-                            GiaNhap = 10000m,
-                            SoLuong = 10,
-                            Ten = "Pepsi",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("68ba1ddf-46b0-4d88-987b-e1d0852ef1c7"),
-                            GiaBan = 10000m,
-                            GiaNhap = 7000m,
-                            SoLuong = 10,
-                            Ten = "Nước Lọc",
-                            TrangThai = true
+                            Id = new Guid("26c5f722-3baa-4df7-b473-2374b39e02a2"),
+                            Ten = "Quản lý"
                         });
                 });
 
@@ -176,16 +81,10 @@ namespace _2.Data.Migrations
                     b.Property<decimal>("GiaBan")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("IdCombo")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("IdDoUong")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("IdGioHang")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("IdMonAn")
+                    b.Property<Guid?>("IdSanPham")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SoLuong")
@@ -193,13 +92,9 @@ namespace _2.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCombo");
-
-                    b.HasIndex("IdDoUong");
-
                     b.HasIndex("IdGioHang");
 
-                    b.HasIndex("IdMonAn");
+                    b.HasIndex("IdSanPham");
 
                     b.ToTable("GioHangChiTiet", (string)null);
                 });
@@ -250,16 +145,10 @@ namespace _2.Data.Migrations
                     b.Property<decimal>("GiaBan")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("IdComBo")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("IdDoUong")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("IdHoaDon")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("IdMonAn")
+                    b.Property<Guid?>("IdSanPham")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SoLuong")
@@ -267,13 +156,9 @@ namespace _2.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdComBo");
-
-                    b.HasIndex("IdDoUong");
-
                     b.HasIndex("IdHoaDon");
 
-                    b.HasIndex("IdMonAn");
+                    b.HasIndex("IdSanPham");
 
                     b.ToTable("HoaDonChiTiet", (string)null);
                 });
@@ -345,110 +230,13 @@ namespace _2.Data.Migrations
                         new
                         {
                             Id = new Guid("bc387d89-bebe-4897-baf0-0ea4e7028a13"),
-                            Ten = "Pizza",
+                            Ten = "Ớt chỉ thiên",
                             TrangThai = true
                         },
                         new
                         {
                             Id = new Guid("22516479-1dfe-4780-b8e0-85c885882aff"),
-                            Ten = "Xà lách",
-                            TrangThai = true
-                        });
-                });
-
-            modelBuilder.Entity("_2.Data.ModelsClass.MonAn", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AnhMonAn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("GiaBan")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("GiaNhap")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("IdLoai")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ten")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdLoai");
-
-                    b.ToTable("MonAn", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("008e2497-081b-4e33-8781-5004edfdf479"),
-                            GiaBan = 100000m,
-                            GiaNhap = 70000m,
-                            IdLoai = new Guid("bc387d89-bebe-4897-baf0-0ea4e7028a13"),
-                            SoLuong = 15,
-                            Ten = "Pizza Bò",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("7e9fe1cf-11cf-4ff1-9bff-b5dea3803b82"),
-                            GiaBan = 100000m,
-                            GiaNhap = 70000m,
-                            IdLoai = new Guid("bc387d89-bebe-4897-baf0-0ea4e7028a13"),
-                            SoLuong = 15,
-                            Ten = "Pizza Lợn",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("e7dbf7d6-95d0-4294-b801-f63bc610a746"),
-                            GiaBan = 100000m,
-                            GiaNhap = 70000m,
-                            IdLoai = new Guid("bc387d89-bebe-4897-baf0-0ea4e7028a13"),
-                            SoLuong = 15,
-                            Ten = "Pizza Xúc Xích",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("52c4a9d4-75ec-4d96-a046-bca3a3831b3a"),
-                            GiaBan = 100000m,
-                            GiaNhap = 70000m,
-                            IdLoai = new Guid("22516479-1dfe-4780-b8e0-85c885882aff"),
-                            SoLuong = 15,
-                            Ten = "Xà lách trộn bò",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("11d8d7f4-318e-4209-9605-04b1260e008c"),
-                            GiaBan = 100000m,
-                            GiaNhap = 70000m,
-                            IdLoai = new Guid("22516479-1dfe-4780-b8e0-85c885882aff"),
-                            SoLuong = 15,
-                            Ten = "Xà lách trộn lợn",
-                            TrangThai = true
-                        },
-                        new
-                        {
-                            Id = new Guid("d6776c14-9f11-4a94-a525-e826d96c6c2e"),
-                            GiaBan = 100000m,
-                            GiaNhap = 70000m,
-                            IdLoai = new Guid("22516479-1dfe-4780-b8e0-85c885882aff"),
-                            SoLuong = 15,
-                            Ten = "Xà lách trộn xúc xích",
+                            Ten = "Ớt ngọt",
                             TrangThai = true
                         });
                 });
@@ -458,6 +246,10 @@ namespace _2.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AnhNhanVien")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DiaChi")
                         .IsRequired()
@@ -469,6 +261,10 @@ namespace _2.Data.Migrations
 
                     b.Property<bool>("GioiTinh")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("IdChucVu")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IdGuiBaoCao")
                         .HasColumnType("uniqueidentifier");
@@ -488,7 +284,12 @@ namespace _2.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdChucVu");
 
                     b.HasIndex("IdGuiBcNavigationId");
 
@@ -498,32 +299,88 @@ namespace _2.Data.Migrations
                         new
                         {
                             Id = new Guid("b54e5b6d-2309-4844-99f6-50b18f665440"),
+                            AnhNhanVien = "",
                             DiaChi = "hd",
                             Email = "hdgnguyentien@gmail.com",
                             GioiTinh = true,
+                            IdChucVu = new Guid("26c5f722-3baa-4df7-b473-2374b39e02a2"),
                             MatKhau = "123456",
                             Sdt = "0987654322",
-                            Ten = "tien"
+                            Ten = "tien",
+                            TrangThai = false
+                        },
+                        new
+                        {
+                            Id = new Guid("b764e8b0-fe90-42c5-95d3-b854620d274b"),
+                            AnhNhanVien = "",
+                            DiaChi = "hn",
+                            Email = "nga@gmail.com",
+                            GioiTinh = false,
+                            IdChucVu = new Guid("6fc0f38f-b421-4fef-8361-8136825aa354"),
+                            MatKhau = "123456",
+                            Sdt = "0987654323",
+                            Ten = "nga",
+                            TrangThai = false
                         });
                 });
 
-            modelBuilder.Entity("_2.Data.ModelsClass.Combo", b =>
+            modelBuilder.Entity("_2.Data.ModelsClass.SanPham", b =>
                 {
-                    b.HasOne("_2.Data.ModelsClass.DoUong", "doUong")
-                        .WithMany("combos")
-                        .HasForeignKey("IdDoUong")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("_2.Data.ModelsClass.MonAn", "monAn")
-                        .WithMany("combos")
-                        .HasForeignKey("IdMonAn")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<decimal>("GiaBan")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Navigation("doUong");
+                    b.Property<decimal>("GiaNhap")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Navigation("monAn");
+                    b.Property<Guid>("IdLoai")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LinkAnh")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoLuong")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ten")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdLoai");
+
+                    b.ToTable("SanPham", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f433cbcc-5300-45ce-bd6c-c41dc87b3f30"),
+                            GiaBan = 100000m,
+                            GiaNhap = 80000m,
+                            IdLoai = new Guid("22516479-1dfe-4780-b8e0-85c885882aff"),
+                            LinkAnh = "",
+                            SoLuong = 10,
+                            Ten = "Ớt ngọt Đà Lạt",
+                            TrangThai = true
+                        },
+                        new
+                        {
+                            Id = new Guid("7cb5f225-8db2-4d48-9f73-68a42b78c1d2"),
+                            GiaBan = 300000m,
+                            GiaNhap = 280000m,
+                            IdLoai = new Guid("bc387d89-bebe-4897-baf0-0ea4e7028a13"),
+                            LinkAnh = "",
+                            SoLuong = 10,
+                            Ten = "Ớt chỉ thiên Hà Nội",
+                            TrangThai = true
+                        });
                 });
 
             modelBuilder.Entity("_2.Data.ModelsClass.GioHang", b =>
@@ -539,29 +396,17 @@ namespace _2.Data.Migrations
 
             modelBuilder.Entity("_2.Data.ModelsClass.GioHangChiTiet", b =>
                 {
-                    b.HasOne("_2.Data.ModelsClass.Combo", "combo")
-                        .WithMany("gioHangChiTiets")
-                        .HasForeignKey("IdCombo");
-
-                    b.HasOne("_2.Data.ModelsClass.DoUong", "doUong")
-                        .WithMany("gioHangChiTiets")
-                        .HasForeignKey("IdDoUong");
-
                     b.HasOne("_2.Data.ModelsClass.GioHang", "gioHang")
                         .WithMany("gioHangChiTiets")
                         .HasForeignKey("IdGioHang");
 
-                    b.HasOne("_2.Data.ModelsClass.MonAn", "monAn")
+                    b.HasOne("_2.Data.ModelsClass.SanPham", "sanpham")
                         .WithMany("gioHangChiTiets")
-                        .HasForeignKey("IdMonAn");
-
-                    b.Navigation("combo");
-
-                    b.Navigation("doUong");
+                        .HasForeignKey("IdSanPham");
 
                     b.Navigation("gioHang");
 
-                    b.Navigation("monAn");
+                    b.Navigation("sanpham");
                 });
 
             modelBuilder.Entity("_2.Data.ModelsClass.HoaDon", b =>
@@ -585,35 +430,40 @@ namespace _2.Data.Migrations
 
             modelBuilder.Entity("_2.Data.ModelsClass.HoaDonChiTiet", b =>
                 {
-                    b.HasOne("_2.Data.ModelsClass.Combo", "combo")
-                        .WithMany("hoaDonChiTiets")
-                        .HasForeignKey("IdComBo");
-
-                    b.HasOne("_2.Data.ModelsClass.DoUong", "doUong")
-                        .WithMany("hoaDonChiTiets")
-                        .HasForeignKey("IdDoUong");
-
                     b.HasOne("_2.Data.ModelsClass.HoaDon", "hoaDon")
                         .WithMany("hoaDonChiTiets")
                         .HasForeignKey("IdHoaDon");
 
-                    b.HasOne("_2.Data.ModelsClass.MonAn", "monAn")
+                    b.HasOne("_2.Data.ModelsClass.SanPham", "sanpham")
                         .WithMany("hoaDonChiTiets")
-                        .HasForeignKey("IdMonAn");
-
-                    b.Navigation("combo");
-
-                    b.Navigation("doUong");
+                        .HasForeignKey("IdSanPham");
 
                     b.Navigation("hoaDon");
 
-                    b.Navigation("monAn");
+                    b.Navigation("sanpham");
                 });
 
-            modelBuilder.Entity("_2.Data.ModelsClass.MonAn", b =>
+            modelBuilder.Entity("_2.Data.ModelsClass.NhanVien", b =>
+                {
+                    b.HasOne("_2.Data.ModelsClass.ChucVu", "chucVu")
+                        .WithMany("nhanViens")
+                        .HasForeignKey("IdChucVu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("_2.Data.ModelsClass.NhanVien", "IdGuiBcNavigation")
+                        .WithMany("InverseIdGuiBcNavigation")
+                        .HasForeignKey("IdGuiBcNavigationId");
+
+                    b.Navigation("IdGuiBcNavigation");
+
+                    b.Navigation("chucVu");
+                });
+
+            modelBuilder.Entity("_2.Data.ModelsClass.SanPham", b =>
                 {
                     b.HasOne("_2.Data.ModelsClass.Loai", "loai")
-                        .WithMany("monAns")
+                        .WithMany("sanPhams")
                         .HasForeignKey("IdLoai")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -621,29 +471,9 @@ namespace _2.Data.Migrations
                     b.Navigation("loai");
                 });
 
-            modelBuilder.Entity("_2.Data.ModelsClass.NhanVien", b =>
+            modelBuilder.Entity("_2.Data.ModelsClass.ChucVu", b =>
                 {
-                    b.HasOne("_2.Data.ModelsClass.NhanVien", "IdGuiBcNavigation")
-                        .WithMany("InverseIdGuiBcNavigation")
-                        .HasForeignKey("IdGuiBcNavigationId");
-
-                    b.Navigation("IdGuiBcNavigation");
-                });
-
-            modelBuilder.Entity("_2.Data.ModelsClass.Combo", b =>
-                {
-                    b.Navigation("gioHangChiTiets");
-
-                    b.Navigation("hoaDonChiTiets");
-                });
-
-            modelBuilder.Entity("_2.Data.ModelsClass.DoUong", b =>
-                {
-                    b.Navigation("combos");
-
-                    b.Navigation("gioHangChiTiets");
-
-                    b.Navigation("hoaDonChiTiets");
+                    b.Navigation("nhanViens");
                 });
 
             modelBuilder.Entity("_2.Data.ModelsClass.GioHang", b =>
@@ -665,16 +495,7 @@ namespace _2.Data.Migrations
 
             modelBuilder.Entity("_2.Data.ModelsClass.Loai", b =>
                 {
-                    b.Navigation("monAns");
-                });
-
-            modelBuilder.Entity("_2.Data.ModelsClass.MonAn", b =>
-                {
-                    b.Navigation("combos");
-
-                    b.Navigation("gioHangChiTiets");
-
-                    b.Navigation("hoaDonChiTiets");
+                    b.Navigation("sanPhams");
                 });
 
             modelBuilder.Entity("_2.Data.ModelsClass.NhanVien", b =>
@@ -682,6 +503,13 @@ namespace _2.Data.Migrations
                     b.Navigation("InverseIdGuiBcNavigation");
 
                     b.Navigation("hoaDons");
+                });
+
+            modelBuilder.Entity("_2.Data.ModelsClass.SanPham", b =>
+                {
+                    b.Navigation("gioHangChiTiets");
+
+                    b.Navigation("hoaDonChiTiets");
                 });
 #pragma warning restore 612, 618
         }

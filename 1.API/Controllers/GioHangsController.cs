@@ -59,7 +59,7 @@ namespace _1.API.Controllers
         }
 
         [HttpPost]
-        [Route("Update/id")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> UpdateGioHang(Guid id, [FromBody] UpdateGioHang ucv)
         {
             var result = await _repo.GetByIdAsync(id);

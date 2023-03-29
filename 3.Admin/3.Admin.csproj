@@ -8,7 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\1.API\1.API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\AnhSanPham\" />
+    <Folder Include="wwwroot\AnhNhanVien\" />
   </ItemGroup>
 
 </Project>
