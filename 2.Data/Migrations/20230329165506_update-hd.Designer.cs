@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2.Data.DbContexts;
 
@@ -11,9 +12,10 @@ using _2.Data.DbContexts;
 namespace _2.Data.Migrations
 {
     [DbContext(typeof(DoAnNhanhDbContext))]
-    partial class DoAnNhanhDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230329165506_update-hd")]
+    partial class updatehd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,9 +128,9 @@ namespace _2.Data.Migrations
                     b.Property<decimal>("TongTien")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("TrangThai")
+                    b.Property<bool?>("TrangThai")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

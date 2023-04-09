@@ -48,7 +48,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        sanPhams = await allServices.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
+        sanPhams = (from a in await allServices.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All")
+                    where a.TrangThai == true
+                    select new SanPham()
+                        {
+                            LinkAnh = a.LinkAnh,
+                            Ten = a.Ten,
+                            Id = a.Id,
+                            GiaBan = a.GiaBan
+                        }).ToList();
     }
     private async Task ThemVaoGioHang(string idsp)
     {

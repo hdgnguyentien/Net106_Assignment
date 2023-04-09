@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2.Data.DbContexts;
 
@@ -11,9 +12,10 @@ using _2.Data.DbContexts;
 namespace _2.Data.Migrations
 {
     [DbContext(typeof(DoAnNhanhDbContext))]
-    partial class DoAnNhanhDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230404153657_92")]
+    partial class _92
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -18,7 +18,7 @@ namespace _2.Data.ModelsClass
         public string Email { get; set; }
         public string MatKhau { get; set; }
         public string DiaChi { get; set; }
-        public bool GioiTinh { get; set; }
+        public bool? GioiTinh { get; set; }
         public string Sdt { get; set; }
         public virtual ICollection<GioHang> gioHangs { get; set; }
         public virtual ICollection<HoaDon> hoaDons { get; set; }

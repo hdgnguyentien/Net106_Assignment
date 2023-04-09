@@ -5,10 +5,12 @@
 @using _3.Admin.IServices;
 @using System.Linq;
 @inject IAllServices services
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigation
 <h3>Sản Phẩm</h3>
 @if (sanPhams == null)
 {
-        <div class="spinner-border"></div>
+    <div class="spinner-border"></div>
 }
 else
 {
@@ -106,21 +108,29 @@ else
     private List<SanPhamView> lst;
     protected override async Task OnInitializedAsync()
     {
-        sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
-        loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
-        lst = (from a in sanPhams.ToList()
-               join b in loais.ToList() on a.IdLoai equals b.Id
-               select new SanPhamView()
-                   {
-                       Id = a.Id,
-                       IdLoai = a.IdLoai,
-                       Ten = a.Ten,
-                       GiaNhap = a.GiaNhap,
-                       GiaBan = a.GiaBan,
-                       SoLuong = a.SoLuong,
-                       LinkAnh = a.LinkAnh,
-                       TrangThai = a.TrangThai ? "Đang bán" : "Ngưng bán"
-                   }).ToList();
+        string idnv = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idnv");
+        if (idnv == null)
+        {
+            navigation.NavigateTo("/dangnhap");
+        }
+        else
+        {
+            sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
+            loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
+            lst = (from a in sanPhams.ToList()
+                   join b in loais.ToList() on a.IdLoai equals b.Id
+                   select new SanPhamView()
+                       {
+                           Id = a.Id,
+                           IdLoai = a.IdLoai,
+                           Ten = a.Ten,
+                           GiaNhap = a.GiaNhap,
+                           GiaBan = a.GiaBan,
+                           SoLuong = a.SoLuong,
+                           LinkAnh = a.LinkAnh,
+                           TrangThai = a.TrangThai ? "Đang bán" : "Ngưng bán"
+                       }).ToList();
+        }
     }
     private void Search(ChangeEventArgs e)
     {
@@ -219,9 +229,8 @@ else
             }
             else
             {
-                //nv.TrangThai = false;
-                //await services.Update<SanPham>("https://localhost:7095/api/SanPhams/Update/", nv, SanPhamId);
-                await services.Remove<SanPham>("https://localhost:7095/api/SanPhams/GetById/", "https://localhost:7095/api/SanPhams/delete/", SanPhamId);
+                nv.TrangThai = false;
+                await services.Update<SanPham>("https://localhost:7095/api/SanPhams/Update/", nv, SanPhamId);
                 sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
                 loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
                 lst = (from a in sanPhams.ToList()

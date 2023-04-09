@@ -1,17 +1,13 @@
 ﻿@page "/dangnhap"
 @using _2.Data.ModelClient.DangNhap;
 @using _2.Data.ModelsClass;
-@using _4.Client.IServices;
+@using _3.Admin.IServices;
 @using Microsoft.JSInterop;
 @inject IJSRuntime JSRuntime
 @inject IAllServices services
 @inject NavigationManager navigation
 <EditForm Model="login" OnValidSubmit="OnLogin">
     <DataAnnotationsValidator />
-    @if (errorDangNhap != null)
-    {
-        <div class="alert alert-danger">@errorDangNhap</div>
-    }
     <div class="main">
         <div class="main">
             <div class="container">
@@ -45,12 +41,6 @@
                     <button type="submit" class="btn btn-dark">
                         Đăng nhập hệ thống
                     </button>
-                    <div class="dangKy">
-                        <p>Bạn chưa có tài khoản? <a href="dangky">Đăng ký ngay</a></p>
-                    </div>
-                    <div class="quenMK">
-                        <a href="quenmatkhau">Bạn quên mật khẩu ?</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -59,28 +49,24 @@
 
 @code {
     private Login login = new Login();
-    private List<KhachHang> khachHangs;
-    private string errorDangNhap;
+    private List<NhanVien> nhanViens;
+    private string errorDangNhap = "Sai tài khoản hoặc mật khẩu";
 
     private async Task OnLogin(EditContext editContext)
     {
-        khachHangs = await services.GetAll<KhachHang>("https://localhost:7095/api/khachhangs/Get-All");
-        var kh = khachHangs.FirstOrDefault(x => x.Email == login.Email && x.MatKhau == login.MatKhau);
-        if (kh == null)
+        nhanViens = await services.GetAll<NhanVien>("https://localhost:7095/api/NhanViens/Get-All");
+        var nv = nhanViens.FirstOrDefault(x => x.Email == login.Email && x.MatKhau == login.MatKhau);
+        if (nv == null)
         {
-            errorDangNhap = "Sai tài khoản hoặc mật khẩu";
+            await JSRuntime.InvokeAsync<object>("showAlert", errorDangNhap, 1);
         }
         else
         {
-            var lstGH = await services.GetAll<GioHang>("https://localhost:7095/api/GioHangs/Get-All");
-            var gh = lstGH.FirstOrDefault(x => x.IdKhachHang == kh.Id);
             //ví dụng về localStorage,sessionStorage
             //await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idgh" , gh.Id.ToString());
             //string value = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idgh");
-
-            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idgh", gh.Id.ToString());
-            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idkh", kh.Id.ToString());
-            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "ten", kh.Ten);
+            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idnv", nv.Id.ToString());
+            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "ten", nv.Ten);
             navigation.NavigateTo("/", true);
         }
     }

@@ -1,42 +1,64 @@
 ﻿@page "/"
+@using _2.Data.ModelsClass;
+@using _3.Admin.IServices;
+@inject IAllServices services
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigation
+<h3>Danh Sách Hóa Đơn Chờ</h3>
 
-<PageTitle>Index</PageTitle>
-
-@if (sanPhams == null)
+@if (hoaDons == null)
 {
     <div class="spinner-border"></div>
 }
 else
 {
-    <h1 class=" text-center">Sản Phẩm</h1>
-    <div class="container">
-        <div class="row">
-            @foreach (var item in sanPhams)
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Mã hóa đơn
+                </th>
+                <th>
+                    Ngày tạo
+                </th>
+                <th>
+                    Chi tiết hóa đơn
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in hoaDons)
             {
-                <div class="col-lg-4">
-                    <div class="card" style="width: 23rem; margin-bottom: 30px">
-                        <img src=@("/AnhSanPham/"+item.LinkAnh) class="img-thumbnail">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.Ten</h5>
-                            <h3 class="card-text fw-bold"> @item.GiaBan$</h3>
-                            <div class="d-grid gap-2 d-md-block">
-                                <a class="btn btn-warning"
-                                   asp-controller="Cart"
-                                   asp-action="AddtoCart"
-                                   asp-route-id="@item.Id">
-                                    Thêm vào giỏ hàng
-                                </a>
-                                <a class="btn btn-danger"
-                                   asp-controller="Cart"
-                                   asp-action="Add"
-                                   asp-route-id="@item.Id">
-                                    Mua ngay
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <tr>
+                    <td>
+                        @item.MaHoaDon
+                    </td>
+                    <td>
+                        @item.NgayTao;
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-success" href="/viewhoadonchitiet/@item.Id">Chi Tiết</a>
+
+                    </td>
+                </tr>
             }
-        </div>
-    </div>
+        </tbody>
+    </table>
+
+}
+
+
+@code {
+    private List<HoaDon> hoaDons;
+    protected override async Task OnInitializedAsync()
+    {
+        hoaDons = (from a in await services.GetAll<HoaDon>("https://localhost:7095/api/hoadons/Get-All")
+                   where a.TrangThai == 1
+                   select new HoaDon()
+                       {
+                           MaHoaDon = a.MaHoaDon,
+                           NgayTao = a.NgayTao,
+                           Id = a.Id
+                       }).ToList();
+    }
 }

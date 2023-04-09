@@ -22,7 +22,7 @@ namespace _2.Data.Configurations
             builder.Property(x => x.TrangThai).IsRequired();
             builder.Property(x => x.DiaChi).IsRequired();
             builder.Property(x => x.IdKhachHang).IsRequired();
-            builder.Property(x => x.IdNhanVien).IsRequired();
+            builder.Property(x => x.IdNhanVien);
 
             builder.HasOne(x => x.khachHang).WithMany(x => x.hoaDons).HasForeignKey(x => x.IdKhachHang);
             builder.HasOne(x => x.nhanVien).WithMany(x => x.hoaDons).HasForeignKey(x => x.IdNhanVien);

@@ -11,12 +11,12 @@ namespace _1.API.Controllers
     public class HoaDonsController : ControllerBase
     {
         private IAllRepositories<HoaDon> _repo;
+        private IAllRepositories<HoaDonChiTiet> _hoaDonCTrepo;
 
-
-        public HoaDonsController(IAllRepositories<HoaDon> repo)
+        public HoaDonsController(IAllRepositories<HoaDon> repo, IAllRepositories<HoaDonChiTiet> hoaDonCTrepo)
         {
             _repo = repo;
-
+            _hoaDonCTrepo = hoaDonCTrepo;
         }
 
         [HttpGet]
@@ -41,10 +41,11 @@ namespace _1.API.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateHoaDon([FromBody] CreateHoaDon ccv)
         {
+            var lsthoadon = await _repo.GetAllAsync();
             HoaDon cv = new HoaDon()
             {
-                Id = Guid.NewGuid(),
-                MaHoaDon = ccv.MaHoaDon,
+                Id = ccv.Id,
+                MaHoaDon = "HD" + (lsthoadon.ToList().Count() + 1),
                 IdKhachHang = ccv.IdKhachHang,
                 IdNhanVien = ccv.IdNhanVien,
                 NgayTao =  ccv.NgayTao,
@@ -101,6 +102,8 @@ namespace _1.API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _repo.GetByIdAsync(id);
+            var lsthoadonct = await _hoaDonCTrepo.GetAllAsync();
+            lsthoadonct = lsthoadonct.ToList().Where(p => p.IdHoaDon == result.Id);
             if (result == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Không tìm thấy HoaDon");
@@ -109,6 +112,10 @@ namespace _1.API.Controllers
             {
                 try
                 {
+                    foreach (var item in lsthoadonct)
+                    {
+                        await _hoaDonCTrepo.DeleteOneAsyn(item);
+                    }
                     await _repo.DeleteOneAsyn(result);
                     return Ok("Xóa thành công");
                 }

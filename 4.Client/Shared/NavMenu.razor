@@ -1,6 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject IJSRuntime JSRuntime
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">4.Client</a>
+        <a class="navbar-brand" href="">Khách Hàng</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,11 +14,13 @@
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="sanphamview">
-                <span class="oi oi-plus" aria-hidden="true"></span> Sản phẩm
-            </NavLink>
+            @if (name != null)
+            {
+                <NavLink class="nav-link" href="viewhoadonkhachhang">
+                    <span class="oi oi-home" aria-hidden="true"></span> Hóa Đơn
+                </NavLink>
+            }
+
         </div>
     </nav>
 </div>
@@ -26,7 +29,11 @@
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
+    private string name;
+    protected override async Task OnInitializedAsync()
+    {
+        name = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "ten");
+    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;

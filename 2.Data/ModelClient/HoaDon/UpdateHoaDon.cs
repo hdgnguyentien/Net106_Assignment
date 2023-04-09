@@ -2,7 +2,7 @@
 {
     public class UpdateHoaDon
     {
-        public string? MaHoaDon { get; set; }
+        public Guid Id { get; set; }
         public Guid? IdKhachHang { get; set; }
         public Guid? IdNhanVien { get; set; }
         public DateTime? NgayTao { get; set; }

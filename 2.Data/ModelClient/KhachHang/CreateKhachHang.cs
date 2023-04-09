@@ -2,7 +2,7 @@
 
 namespace _1.API.ViewModels.KhachHang
 {
-    public class UpdateKhachHang
+    public class CreateKhachHang
     {
         [Required(ErrorMessage = "Vui lòng nhập tên")]
         public string Ten { get; set; }

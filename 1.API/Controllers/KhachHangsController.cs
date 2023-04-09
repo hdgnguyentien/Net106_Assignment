@@ -11,12 +11,13 @@ namespace _1.API.Controllers
     public class KhachHangsController : ControllerBase
     {
         private IAllRepositories<KhachHang> _repo;
+        private IAllRepositories<GioHang> _repoGioHang;
 
 
-        public KhachHangsController(IAllRepositories<KhachHang> repo)
+        public KhachHangsController(IAllRepositories<KhachHang> repo, IAllRepositories<GioHang> repoGioHang)
         {
             _repo = repo;
-
+            _repoGioHang = repoGioHang;
         }
 
         [HttpGet]
@@ -54,6 +55,12 @@ namespace _1.API.Controllers
             try
             {
                 var result = await _repo.AddOneAsyn(cv);
+                GioHang giohang = new GioHang()
+                {
+                    Id = Guid.NewGuid(),
+                    IdKhachHang = result.Id
+                };
+                await _repoGioHang.AddOneAsyn(giohang);
                 return Ok(cv);
             }
             catch (Exception ex)
