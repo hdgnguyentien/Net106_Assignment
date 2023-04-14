@@ -117,34 +117,43 @@ else
     private Guid NhanVienId { get; set; }
     private string searchInput;
     private string idChucVu;
+    private string idnv;
     private List<NhanVienView> lst;
     protected override async Task OnInitializedAsync()
     {
-        string idnv = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idnv");
-        if (idnv == null)
+        nhanViens = await services.GetAll<NhanVien>("https://localhost:7095/api/NhanViens/Get-All");
+        chucVus = await services.GetAll<ChucVu>("https://localhost:7095/api/ChucVus/Get-All");
+        lst = (from a in nhanViens.ToList()
+               join b in chucVus.ToList() on a.IdChucVu equals b.Id
+               select new NhanVienView()
+                   {
+                       Id = a.Id,
+                       Ten = a.Ten,
+                       MatKhau = a.MatKhau,
+                       ChucVu = b.Ten,
+                       Email = a.Email,
+                       Sdt = a.Sdt,
+                       DiaChi = a.DiaChi,
+                       AnhNhanVien = a.AnhNhanVien,
+                       TrangThai = a.TrangThai ? "Đang hoạt động" : "Ngưng hoạt động"
+                   }).ToList();
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
         {
-            navigation.NavigateTo("/dangnhap");
+            idnv = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idnv");
+            if (idnv == null)
+            {
+                navigation.NavigateTo("/dangnhap");
+            }
+            else
+            {
+                await OnInitializedAsync();
+            }
         }
-        else
-        {
-            nhanViens = await services.GetAll<NhanVien>("https://localhost:7095/api/NhanViens/Get-All");
-            chucVus = await services.GetAll<ChucVu>("https://localhost:7095/api/ChucVus/Get-All");
-            lst = (from a in nhanViens.ToList()
-                   join b in chucVus.ToList() on a.IdChucVu equals b.Id
-                   select new NhanVienView()
-                       {
-                           Id = a.Id,
-                           IdChucVu = a.IdChucVu,
-                           Ten = a.Ten,
-                           MatKhau = a.MatKhau,
-                           ChucVu = b.Ten,
-                           Email = a.Email,
-                           Sdt = a.Sdt,
-                           DiaChi = a.DiaChi,
-                           AnhNhanVien = a.AnhNhanVien,
-                           TrangThai = a.TrangThai ? "Đang hoạt động" : "Ngưng hoạt động"
-                       }).ToList();
-        }
+
 
     }
     private void Search(ChangeEventArgs e)
@@ -166,7 +175,6 @@ else
                    }).ToList();
         if (!string.IsNullOrEmpty(searchInput))
         {
-            lst = lst.Where(p => p.Ten.ToLower().Contains(searchInput.ToLower())).ToList();
             if (lst.Count == 0)
             {
                 lst = lst;
@@ -184,6 +192,7 @@ else
     }
     private void filterByRole(ChangeEventArgs e)
     {
+        searchInput = null;
         idChucVu = Convert.ToString(e.Value);
         lst = (from a in nhanViens.ToList()
                join b in chucVus.ToList() on a.IdChucVu equals b.Id
@@ -230,23 +239,7 @@ else
 
             if (nv.TrangThai == false)
             {
-                nhanViens = await services.GetAll<NhanVien>("https://localhost:7095/api/NhanViens/Get-All");
-                chucVus = await services.GetAll<ChucVu>("https://localhost:7095/api/ChucVus/Get-All");
-                lst = (from a in nhanViens.ToList()
-                       join b in chucVus.ToList() on a.IdChucVu equals b.Id
-                       select new NhanVienView()
-                           {
-                               Id = a.Id,
-                               IdChucVu = a.IdChucVu,
-                               Ten = a.Ten,
-                               MatKhau = a.MatKhau,
-                               ChucVu = b.Ten,
-                               Email = a.Email,
-                               Sdt = a.Sdt,
-                               DiaChi = a.DiaChi,
-                               AnhNhanVien = a.AnhNhanVien,
-                               TrangThai = a.TrangThai ? "Đang hoạt động" : "Ngưng hoạt động"
-                           }).ToList();
+                await JSRuntime.InvokeAsync<object>("showAlert", "Nhân viên đã ngưng hoạt động rồi", 5);
             }
             else
             {

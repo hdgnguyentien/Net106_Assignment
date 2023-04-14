@@ -31,13 +31,12 @@
                                aria-current="page"
                                style="border: 0px;"
                                href="/buynow">
-                                <img src="/cart/shopping-cart.png"/>
-                                @*<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    @ItemCount
-                                </span>*@
+                                <img src="/cart/shopping-cart.png" />
+                                @*                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            @ItemCount
+                            </span>*@
                             </a>
                         </div>
-
                     }
 
                 </div>
@@ -49,14 +48,14 @@
     </main>
 </div>
 @code {
-    private List<GioHangChiTiet> gioHangChiTiets = new List<GioHangChiTiet>();
-    private List<SanPham> sanPhams;
-    // public int ItemCount;
+    //private List<GioHangChiTiet> gioHangChiTiets = new List<GioHangChiTiet>();
+    //private List<SanPham> sanPhams;
+    //public int ItemCount;
     private string name;
     protected override async Task OnInitializedAsync()
     {
-        sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
-        gioHangChiTiets = await services.GetAll<GioHangChiTiet>("https://localhost:7095/api/GioHangChiTiets/Get-All");
+        //sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
+        //gioHangChiTiets = await services.GetAll<GioHangChiTiet>("https://localhost:7095/api/GioHangChiTiets/Get-All");
         name = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "ten");
         //string idgh = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idgh");
         //ItemCount = gioHangChiTiets.Where(x => x.IdGioHang.ToString() == idgh).Sum(x => x.SoLuong);
@@ -67,6 +66,6 @@
         await JSRuntime.InvokeAsync<object>("sessionStorage.removeItem", "idkh");
         await JSRuntime.InvokeAsync<object>("sessionStorage.removeItem", "ten");
         await OnInitializedAsync();
-        navigation.NavigateTo("/",true);
+        navigation.NavigateTo("/", true);
     }
 }

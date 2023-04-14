@@ -3,6 +3,7 @@
 @using _2.Data.ModelsClass;
 @using _3.Admin.IServices;
 @inject IAllServices services
+@inject IJSRuntime JSRuntime
 @inject NavigationManager navigation
 @inject IWebHostEnvironment _webHost
 <h3>Create</h3>
@@ -139,6 +140,11 @@
             crSP.GiaNhap = 0;
             crSP.GiaBan = 0;
             errorTen = null;
+        }
+        else if (string.IsNullOrEmpty(crSP.LinkAnh))
+        {
+            errorGia = null;
+            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho sản phẩm", 1);
         }
         else
         {

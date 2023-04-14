@@ -11,14 +11,13 @@
     <div class="main">
         <div class="main">
             <div class="container">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="login" style="text-align : center">
                     <div class="login-title"><h1>Đăng nhập</h1></div>
-                    <div class="mb-3 row">
+                    <div class="mb-3 row form-group">
                         <div class="col-sm-2"></div>
-                        <label for="" class="col-sm-2 col-form-label">Nhập tài khoản</label>
+                        <label for="Email" class="col-sm-2 col-form-label">Nhập tài khoản</label>
                         <div class="col-sm-5">
-                            <InputText asp-for="Email" class="form-control form-control-lg" @bind-Value="login.Email" ></InputText>
+                            <InputText class="form-control" @bind-Value="login.Email"></InputText>
                             <div style="height:20px">
                                 <ValidationMessage For="()=>login.Email"></ValidationMessage>
                                 <small for="Email" class="text-danger"></small>
@@ -59,6 +58,9 @@
         if (nv == null)
         {
             await JSRuntime.InvokeAsync<object>("showAlert", errorDangNhap, 1);
+        }else if (nv.TrangThai == false)
+        {
+            await JSRuntime.InvokeAsync<object>("showAlert", "Nhân viên không còn hoạt động vui lòng liên hệ quản lý để đc đăng nhập", 1);
         }
         else
         {

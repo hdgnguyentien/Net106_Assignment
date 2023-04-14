@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using _3.Admin.IServices;
+@inherits LayoutComponentBase
+@inject IAllServices services
+@inject NavigationManager navigation
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigation
 <PageTitle>3.Admin</PageTitle>
@@ -17,3 +20,37 @@
         </article>
     </main>
 </div>
+@code {
+
+    private string name;
+    protected override async Task OnInitializedAsync()
+    {
+        if (name != null)
+        {
+            name = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "ten");
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool torender)
+    {
+        if (torender)
+        {
+            name = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "ten");
+            if (name != null)
+            {
+                await OnInitializedAsync();
+            }
+            else
+            {
+                navigation.NavigateTo("/dangnhap");
+            }
+        }
+    }
+
+    private async Task dangxuat()
+    {
+        await JSRuntime.InvokeAsync<object>("sessionStorage.removeItem", "ten");
+        await JSRuntime.InvokeAsync<object>("sessionStorage.removeItem", "idnv");
+        await OnInitializedAsync();
+        navigation.NavigateTo("/", true);
+    }
+}

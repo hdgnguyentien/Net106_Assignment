@@ -100,6 +100,11 @@ else
                 SoLuong = item.SoLuong,
             };
             sl.SoLuong -= item.SoLuong;
+            if (sl.SoLuong == 0)
+            {
+                sl.TrangThai = false;
+                await services.Update("https://localhost:7095/api/sanphams/update/", sl, sl.Id);
+            }
             await services.Update("https://localhost:7095/api/sanphams/update/", sl, sl.Id);
             await services.Add("https://localhost:7095/api/HoaDonChiTiets/", hdct);
             await services.Remove<GioHangChiTiet>("https://localhost:7095/api/giohangchitiets/getbyid", "https://localhost:7095/api/giohangchitiets/delete/", item.Id);

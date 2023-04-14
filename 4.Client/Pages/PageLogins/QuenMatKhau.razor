@@ -7,8 +7,6 @@
 @inject IJSRuntime JSRuntime
 @inject IAllServices services
 @inject NavigationManager navigation
-<h3>Quenmatkhau</h3>
-
 <div class="container">
     <EditForm Model="modelQuenMK" OnValidSubmit="OnQuenMK">
         <DataAnnotationsValidator />
@@ -27,7 +25,7 @@
 
             <div class="mb-3 row">
                 <div class="col-sm-2"></div>
-                <label>Nhập Email</label>
+                <label>Nhập số điện thoại</label>
                 <InputText class="form-control form-control-lg" @bind-Value="modelQuenMK.SDT"></InputText>
                 <div style="height:20px">
                     <ValidationMessage For="()=>modelQuenMK.SDT"></ValidationMessage>

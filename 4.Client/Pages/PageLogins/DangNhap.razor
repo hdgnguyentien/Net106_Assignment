@@ -20,9 +20,9 @@
                     <div class="login-title"><h1>Đăng nhập</h1></div>
                     <div class="mb-3 row">
                         <div class="col-sm-2"></div>
-                        <label for="" class="col-sm-2 col-form-label">Nhập tài khoản</label>
+                        <label for="Email" class="col-sm-2 col-form-label">Nhập tài khoản</label>
                         <div class="col-sm-5">
-                            <InputText asp-for="Email" class="form-control form-control-lg" @bind-Value="login.Email" ></InputText>
+                            <InputText for="Email" class="form-control form-control-lg" @bind-Value="login.Email" ></InputText>
                             <div style="height:20px">
                                 <ValidationMessage For="()=>login.Email"></ValidationMessage>
                                 <small for="Email" class="text-danger"></small>
@@ -75,13 +75,13 @@
             var lstGH = await services.GetAll<GioHang>("https://localhost:7095/api/GioHangs/Get-All");
             var gh = lstGH.FirstOrDefault(x => x.IdKhachHang == kh.Id);
             //ví dụng về localStorage,sessionStorage
-            //await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idgh" , gh.Id.ToString());
+            //await JSRuntime.InvokeAsync<string>("sessionStorage.setItem", "idgh" , gh.Id.ToString());
             //string value = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idgh");
 
-            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idgh", gh.Id.ToString());
-            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "idkh", kh.Id.ToString());
-            await JSRuntime.InvokeAsync<object>("sessionStorage.setItem", "ten", kh.Ten);
-            navigation.NavigateTo("/", true);
+            await JSRuntime.InvokeAsync<string>("sessionStorage.setItem", "idgh", gh.Id.ToString());
+            await JSRuntime.InvokeAsync<string>("sessionStorage.setItem", "idkh", kh.Id.ToString());
+            await JSRuntime.InvokeAsync<string>("sessionStorage.setItem", "ten", kh.Ten);
+            navigation.NavigateTo("/",true);
         }
     }
 }

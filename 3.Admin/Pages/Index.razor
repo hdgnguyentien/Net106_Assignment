@@ -34,7 +34,7 @@ else
                         @item.MaHoaDon
                     </td>
                     <td>
-                        @item.NgayTao;
+                        @item.NgayTao
                     </td>
                     <td>
                         <a class="btn btn-outline-success" href="/viewhoadonchitiet/@item.Id">Chi Tiết</a>
@@ -60,5 +60,20 @@ else
                            NgayTao = a.NgayTao,
                            Id = a.Id
                        }).ToList();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string idnv = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idnv");
+            if (idnv == null)
+            {
+                navigation.NavigateTo("/dangnhap");
+            }
+            else
+            {
+                await OnInitializedAsync();
+            }
+        }
     }
 }

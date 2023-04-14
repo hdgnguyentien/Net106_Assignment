@@ -20,7 +20,6 @@ namespace _1.API.ViewModels.SanPham
         public int SoLuong { get; set; }
         [Required(ErrorMessage = "Vui lòng chọn trạng thái")]
         public bool TrangThai { get; set; }
-        [Required(ErrorMessage = "Vui lòng chọn ảnh nhân viên")]
         public string? LinkAnh { get; set; }
     }
 }

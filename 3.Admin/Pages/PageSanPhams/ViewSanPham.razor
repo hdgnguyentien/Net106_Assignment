@@ -108,28 +108,35 @@ else
     private List<SanPhamView> lst;
     protected override async Task OnInitializedAsync()
     {
-        string idnv = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idnv");
-        if (idnv == null)
+        sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
+        loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
+        lst = (from a in sanPhams.ToList()
+               join b in loais.ToList() on a.IdLoai equals b.Id
+               select new SanPhamView()
+                   {
+                       Id = a.Id,
+                       IdLoai = a.IdLoai,
+                       Ten = a.Ten,
+                       GiaNhap = a.GiaNhap,
+                       GiaBan = a.GiaBan,
+                       SoLuong = a.SoLuong,
+                       LinkAnh = a.LinkAnh,
+                       TrangThai = a.TrangThai ? "Đang bán" : "Ngưng bán"
+                   }).ToList();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
         {
-            navigation.NavigateTo("/dangnhap");
-        }
-        else
-        {
-            sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
-            loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
-            lst = (from a in sanPhams.ToList()
-                   join b in loais.ToList() on a.IdLoai equals b.Id
-                   select new SanPhamView()
-                       {
-                           Id = a.Id,
-                           IdLoai = a.IdLoai,
-                           Ten = a.Ten,
-                           GiaNhap = a.GiaNhap,
-                           GiaBan = a.GiaBan,
-                           SoLuong = a.SoLuong,
-                           LinkAnh = a.LinkAnh,
-                           TrangThai = a.TrangThai ? "Đang bán" : "Ngưng bán"
-                       }).ToList();
+            string idnv = await JSRuntime.InvokeAsync<string>("sessionStorage.getItem", "idnv");
+            if (idnv == null)
+            {
+                navigation.NavigateTo("/dangnhap");
+            }
+            else
+            {
+                await OnInitializedAsync();
+            }
         }
     }
     private void Search(ChangeEventArgs e)
@@ -150,7 +157,6 @@ else
                    }).ToList();
         if (!string.IsNullOrEmpty(searchInput))
         {
-            lst = lst.Where(p => p.Ten.ToLower().Contains(searchInput.ToLower())).ToList();
             if (lst.Count == 0)
             {
                 lst = lst;
@@ -162,12 +168,13 @@ else
         }
         else
         {
-            lst = lst;
+            lst = lst.Where(p => p.IdLoai == Guid.Parse(idLoai)).ToList();
         }
 
     }
     private void filterByCategory(ChangeEventArgs e)
     {
+        searchInput = null;
         idLoai = Convert.ToString(e.Value);
         lst = (from a in sanPhams.ToList()
                join b in loais.ToList() on a.IdLoai equals b.Id
@@ -211,21 +218,7 @@ else
             var nv = await services.GetById<SanPham>("https://localhost:7095/api/SanPhams/GetById/", SanPhamId);
             if (nv.TrangThai == false)
             {
-                sanPhams = await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All");
-                loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
-                lst = (from a in sanPhams.ToList()
-                       join b in loais.ToList() on a.IdLoai equals b.Id
-                       select new SanPhamView()
-                           {
-                               Id = a.Id,
-                               IdLoai = a.IdLoai,
-                               Ten = a.Ten,
-                               GiaNhap = a.GiaNhap,
-                               GiaBan = a.GiaBan,
-                               SoLuong = a.SoLuong,
-                               LinkAnh = a.LinkAnh,
-                               TrangThai = a.TrangThai ? "Đang bán" : "Ngưng bán"
-                           }).ToList();
+                await JSRuntime.InvokeAsync<object>("showAlert", "Sản phẩm đã ngưng bán rồi rồi", 5);
             }
             else
             {

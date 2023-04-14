@@ -14,7 +14,25 @@
 else
 {
     <h1 class=" text-center">Sản Phẩm</h1>
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <input class="form-control" @onchange="Search" value="@searchInput" type="text" placeholder="Nhập tên sản phẩm" />
+                <br>
+                <select class="form-select" aria-label="Default select example" onchange="@filterByCategory" Value="@idLoai">
+                    <option value="0" selected>Tất cả loại sản phẩm</option>
+                    @foreach (var item in loais)
+                    {
+
+                        <option value="@item.Id">@item.Ten</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <hr />
+    <div class="container-fluid">
         <div class="row">
             @foreach (var item in sanPhams)
             {
@@ -43,8 +61,11 @@ else
 }
 @code {
     private List<SanPham> sanPhams;
+    private List<Loai> loais;
     private string errorSl = "Vượt quá só lượng trong kho rồi";
     private string successAdd = "Thêm vào giỏ hàng thành công!";
+    string idLoai;
+    string searchInput;
 
     protected override async Task OnInitializedAsync()
     {
@@ -57,6 +78,7 @@ else
                             Id = a.Id,
                             GiaBan = a.GiaBan
                         }).ToList();
+        loais = await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All");
     }
     private async Task ThemVaoGioHang(string idsp)
     {
@@ -99,6 +121,59 @@ else
                     navigation.NavigateTo("/");
                 }
 
+            }
+        }
+    }
+    private async Task Search(ChangeEventArgs e)
+    {
+        searchInput = Convert.ToString(e.Value);
+        sanPhams = (from a in await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All")
+                    join b in await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All") on a.IdLoai equals b.Id
+                    select new SanPham()
+                        {
+                            LinkAnh = a.LinkAnh,
+                            Ten = a.Ten,
+                            Id = a.Id,
+                            GiaBan = a.GiaBan,
+                            IdLoai = b.Id
+                        }).ToList();
+
+        if (!string.IsNullOrEmpty(searchInput))
+        {
+            sanPhams = sanPhams.Where(p => p.Ten.ToLower().Contains(searchInput.ToLower())).ToList();
+        }
+        else
+        {
+            sanPhams = sanPhams;
+        }
+    }
+    private async Task filterByCategory(ChangeEventArgs e)
+    {
+        searchInput = null;
+        idLoai = Convert.ToString(e.Value);
+        sanPhams = (from a in await services.GetAll<SanPham>("https://localhost:7095/api/SanPhams/Get-All")
+                    join b in await services.GetAll<Loai>("https://localhost:7095/api/Loais/Get-All") on a.IdLoai equals b.Id
+                    select new SanPham()
+                        {
+                            LinkAnh = a.LinkAnh,
+                            Ten = a.Ten,
+                            Id = a.Id,
+                            GiaBan = a.GiaBan,
+                            IdLoai = b.Id
+                        }).ToList();
+        if (idLoai == null)
+        {
+            sanPhams = sanPhams;
+        }
+        else
+        {
+            if (idLoai == "0")
+            {
+                sanPhams = sanPhams;
+            }
+            else
+            {
+                sanPhams = sanPhams.Where(x => x.IdLoai == Guid.Parse(idLoai)).ToList();
             }
         }
     }

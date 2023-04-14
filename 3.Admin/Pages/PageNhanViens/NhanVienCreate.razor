@@ -4,6 +4,7 @@
 @using _3.Admin.IServices;
 @using Microsoft.JSInterop
 @inject IAllServices services
+@inject IJSRuntime JSRuntime
 @inject NavigationManager navigation
 @inject IWebHostEnvironment _webHost
 <h3>Create</h3>
@@ -67,7 +68,7 @@
         <InputSelect class="form-control" @bind-Value="crNV.IdChucVu">
             @if (chucVus == null)
             {
-                    <div class="spinner-border"></div>
+                <div class="spinner-border"></div>
             }
             else
             {
@@ -97,7 +98,7 @@
         }
         <div class="custom-file mt-2">
             <InputFile class="form-control form-control-sm form-control-file" @bind-Value="crNV.AnhNhanVien" OnChange="HandleSelectedFile" />
-@*            <ValidationMessage For="()=>crNV.AnhNhanVien"></ValidationMessage>
+            @*            <ValidationMessage For="()=>crNV.AnhNhanVien"></ValidationMessage>
             <small for="AnhNhanVien" class="text-danger"></small>*@
         </div>
     </div>
@@ -112,6 +113,8 @@
     private string errorChucVu;
     private string errorEmail;
     private string ImageUrl;
+    private string folder;
+
     protected override async Task OnInitializedAsync()
     {
         chucVus = await services.GetAll<ChucVu>("https://localhost:7095/api/ChucVus/Get-All");
@@ -127,17 +130,14 @@
             ImageUrl = imageUrl;
 
             string uploadFolder = Path.Combine(_webHost.WebRootPath, "AnhNhanVien");
-            string uploadFolderClient = Path.Combine("C:\\Users\\Admin\\OneDrive\\Documents\\Desktop\\Project\\Net106_Assignment\\4.Client\\wwwroot\\", "AnhNhanVienClient");
 
-            string folder = Guid.NewGuid().ToString() + "_" + file.Name;
+            folder = Guid.NewGuid().ToString() + "_" + file.Name;
 
             crNV.AnhNhanVien = folder;
 
             string severfolder = Path.Combine(uploadFolder, folder);
-            string severfolderClient = Path.Combine(uploadFolderClient, folder);
 
             await file.OpenReadStream().CopyToAsync(new FileStream(severfolder, FileMode.Create));
-            await file.OpenReadStream().CopyToAsync(new FileStream(severfolderClient, FileMode.Create));
 
 
         }
@@ -156,6 +156,10 @@
         {
             errorChucVu = "Vui lòng nhập chức vụ";
             errorEmail = null;
+        }
+        else if (string.IsNullOrEmpty(crNV.AnhNhanVien))
+        {
+            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho nhân viên", 1);
         }
         else
         {
