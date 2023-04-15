@@ -144,7 +144,8 @@
         else if (string.IsNullOrEmpty(crSP.LinkAnh))
         {
             errorGia = null;
-            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho sản phẩm", 1);
+            errorTen = null;
+            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho sản phẩm", 5);
         }
         else
         {

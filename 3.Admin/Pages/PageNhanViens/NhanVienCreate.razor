@@ -159,7 +159,9 @@
         }
         else if (string.IsNullOrEmpty(crNV.AnhNhanVien))
         {
-            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho nhân viên", 1);
+            errorEmail = null;
+            errorChucVu = null;
+            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho nhân viên", 5);
         }
         else
         {

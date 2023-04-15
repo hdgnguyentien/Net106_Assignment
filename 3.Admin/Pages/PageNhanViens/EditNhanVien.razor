@@ -4,6 +4,7 @@
 @using _2.Data.ModelsClass;
 @using _3.Admin.IServices;
 @inject IAllServices services
+@inject IJSRuntime JSRuntime
 @inject NavigationManager navigation
 @inject IWebHostEnvironment _webHost
 @if (nv == null)
@@ -162,10 +163,18 @@ else
     private async Task SubmitNhanVien(EditContext editContext)
     {
         var result = await services.Update<UpdateNhanVien>("https://localhost:7095/api/nhanviens/Update/", nv, Guid.Parse(NhanVienId));
-        if (result != null)
+        if (!string.IsNullOrEmpty(nv.AnhNhanVien))
         {
-            navigation.NavigateTo("/viewnhanvien");
+            if (result != null)
+            {
+                navigation.NavigateTo("/viewnhanvien");
+            }
         }
+        else
+        {
+            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho nhân viên", 5);
+        }
+
     }
 
 }

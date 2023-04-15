@@ -54,12 +54,7 @@ else
     {
         hoaDons = (from a in await services.GetAll<HoaDon>("https://localhost:7095/api/hoadons/Get-All")
                    where a.TrangThai == 1
-                   select new HoaDon()
-                       {
-                           MaHoaDon = a.MaHoaDon,
-                           NgayTao = a.NgayTao,
-                           Id = a.Id
-                       }).ToList();
+                   select a).ToList();
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

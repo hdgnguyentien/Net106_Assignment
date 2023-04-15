@@ -3,6 +3,7 @@
 @using _2.Data.ModelsClass;
 @using _3.Admin.IServices;
 @inject IAllServices services
+@inject IJSRuntime JSRuntime
 @inject NavigationManager navigation
 @inject IWebHostEnvironment _webHost
 @if (sp == null)
@@ -21,7 +22,7 @@ else
         }
         <div class="form-group">
             <label for="Ten" class="control-label">Họ và tên</label>
-            <InputText class="form-control" @bind-Value="sp.Ten"></InputText>
+            <InputText class="form-control" @bind-Value="sp.Ten" readonly></InputText>
             <ValidationMessage For="()=>sp.Ten"></ValidationMessage>
             <small for="nameHelp" class="text-danger"></small>
         </div>
@@ -154,6 +155,10 @@ else
             errorGia = "Sai giá, nhập lại giá";
             sp.GiaNhap = 0;
             sp.GiaBan = 0;
+        }else if (string.IsNullOrEmpty(sp.LinkAnh))
+        {
+            errorGia = null;
+            await JSRuntime.InvokeAsync<object>("showAlert", "Vui lòng chọn ảnh cho sản phẩm", 5);
         }
         else
         {
